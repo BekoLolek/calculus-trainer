@@ -11,6 +11,8 @@ interface MathInputProps {
   className?: string;
   showFeedback?: 'correct' | 'incorrect' | null;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  question?: string;
+  questionLatex?: string;
 }
 
 export function MathInput({
@@ -21,6 +23,8 @@ export function MathInput({
   className = '',
   showFeedback = null,
   onKeyDown,
+  question,
+  questionLatex,
 }: MathInputProps) {
   const [showKeyboard, setShowKeyboard] = useState(false);
 
@@ -28,22 +32,23 @@ export function MathInput({
     ? 'border-green-500 bg-green-50 ring-2 ring-green-200'
     : showFeedback === 'incorrect'
     ? 'border-red-500 bg-red-50 ring-2 ring-red-200 shake'
-    : 'border-gray-300 hover:border-gray-400';
+    : 'border-gray-300 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200';
 
   return (
     <>
       <div
         className={`relative flex items-center gap-2 border rounded-lg transition-all ${feedbackClasses} ${className}`}
       >
-        {/* Display current value (read-only preview) */}
-        <div
-          onClick={() => !disabled && setShowKeyboard(true)}
-          className={`flex-1 px-4 py-3 text-lg font-mono min-h-[50px] flex items-center cursor-pointer ${
-            disabled ? 'cursor-not-allowed opacity-60' : ''
-          } ${!value ? 'text-gray-400' : 'text-gray-900'}`}
-        >
-          {value || placeholder}
-        </div>
+        {/* Regular text input */}
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={onKeyDown}
+          placeholder={placeholder}
+          disabled={disabled}
+          className="flex-1 px-4 py-3 bg-transparent outline-none text-lg font-mono"
+        />
 
         <button
           type="button"
@@ -80,6 +85,8 @@ export function MathInput({
           onChange={onChange}
           onClose={() => setShowKeyboard(false)}
           placeholder={placeholder}
+          question={question}
+          questionLatex={questionLatex}
         />
       )}
     </>

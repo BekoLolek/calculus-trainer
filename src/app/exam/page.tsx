@@ -316,6 +316,8 @@ export default function ExamPage() {
                         disabled={state.submitted}
                         showFeedback={state.submitted ? (state.isCorrect ? 'correct' : 'incorrect') : null}
                         placeholder="Type your answer..."
+                        question={question.question}
+                        questionLatex={question.questionLatex}
                       />
                     </div>
                     {!state.submitted ? (

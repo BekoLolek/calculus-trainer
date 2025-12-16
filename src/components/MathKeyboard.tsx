@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
+import { MathBlock } from './Math';
 
 interface MathKeyboardProps {
   value: string;
@@ -8,6 +9,8 @@ interface MathKeyboardProps {
   onClose: () => void;
   onSubmit?: () => void;
   placeholder?: string;
+  question?: string;
+  questionLatex?: string;
 }
 
 // Organized symbols - most used first
@@ -115,7 +118,7 @@ const symbolGroups = [
   },
 ];
 
-export function MathKeyboard({ value, onChange, onClose, onSubmit, placeholder }: MathKeyboardProps) {
+export function MathKeyboard({ value, onChange, onClose, onSubmit, placeholder, question, questionLatex }: MathKeyboardProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -176,6 +179,19 @@ export function MathKeyboard({ value, onChange, onClose, onSubmit, placeholder }
             </svg>
           </button>
         </div>
+
+        {/* Question display */}
+        {(question || questionLatex) && (
+          <div className="px-4 py-3 bg-blue-50 border-b">
+            <div className="text-xs font-medium text-blue-600 uppercase tracking-wide mb-1">Question</div>
+            {question && <p className="text-gray-800 font-medium">{question}</p>}
+            {questionLatex && (
+              <div className="mt-1">
+                <MathBlock>{questionLatex}</MathBlock>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Input field inside modal */}
         <div className="p-4 border-b">

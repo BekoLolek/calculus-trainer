@@ -174,6 +174,8 @@ export default function PracticePage() {
                     disabled={submitted}
                     showFeedback={submitted ? (isCorrect ? 'correct' : 'incorrect') : null}
                     placeholder="Type your answer..."
+                    question={currentQuestion.question}
+                    questionLatex={currentQuestion.questionLatex}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && !submitted && userAnswer.trim()) {
                         handleSubmit();
