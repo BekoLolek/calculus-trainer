@@ -6,6 +6,7 @@ A web-based calculus learning platform with interactive lessons, quizzes, and pr
 
 - **11 Topic Lessons** - Comprehensive coverage of calculus fundamentals
 - **Interactive Quizzes** - Fill-in-the-blank questions with instant feedback
+- **Unlimited Practice Mode** - Infinite dynamically generated questions with variable numbers
 - **Math Symbol Keyboard** - Special input menu for mathematical symbols (integrals, derivatives, Greek letters, etc.)
 - **Progress Tracking** - Track your improvement over time with localStorage persistence
 - **Final Exam** - Comprehensive assessment based on actual exam material
@@ -102,30 +103,33 @@ After initial setup, every push to the `main` branch will automatically trigger 
 
 1. **Home Page** - View all topics and your overall progress
 2. **Topic Pages** - Read the lesson, then take the quiz
-3. **Math Keyboard** - Click the input field to access math symbols
-4. **Progress Page** - Track your attempts and scores over time
-5. **Final Exam** - Test your knowledge with the comprehensive exam
+3. **Practice Mode** - Unlimited questions with randomized numbers, filter by category
+4. **Math Keyboard** - Click the input field to access math symbols
+5. **Progress Page** - Track your attempts and scores over time
+6. **Final Exam** - Test your knowledge with the comprehensive exam
 
 ## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── page.tsx          # Home page
-│   ├── exam/page.tsx     # Final exam
-│   ├── progress/page.tsx # Progress tracking
-│   └── topic/[id]/       # Dynamic topic pages
+│   ├── page.tsx           # Home page
+│   ├── practice/page.tsx  # Unlimited practice mode
+│   ├── exam/page.tsx      # Final exam
+│   ├── progress/page.tsx  # Progress tracking
+│   └── topic/[id]/        # Dynamic topic pages
 ├── components/
-│   ├── Math.tsx          # KaTeX rendering
-│   ├── MathKeyboard.tsx  # Symbol input keyboard
-│   ├── MathInput.tsx     # Input with math keyboard
-│   ├── Quiz.tsx          # Quiz component
+│   ├── Math.tsx           # KaTeX rendering
+│   ├── MathKeyboard.tsx   # Symbol input keyboard
+│   ├── MathInput.tsx      # Input with math keyboard
+│   ├── Quiz.tsx           # Quiz component
 │   └── ...
 └── lib/
-    ├── topics.ts         # All topic content
-    ├── examQuestions.ts  # Final exam questions
-    ├── storage.ts        # localStorage helpers
-    └── types.ts          # TypeScript interfaces
+    ├── topics.ts            # All topic content
+    ├── practiceQuestions.ts # Dynamic question generator
+    ├── examQuestions.ts     # Final exam questions
+    ├── storage.ts           # localStorage helpers
+    └── types.ts             # TypeScript interfaces
 ```
 
 ## License

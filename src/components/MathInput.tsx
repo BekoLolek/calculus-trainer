@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { MathKeyboard } from './MathKeyboard';
 
 interface MathInputProps {
@@ -10,6 +10,7 @@ interface MathInputProps {
   disabled?: boolean;
   className?: string;
   showFeedback?: 'correct' | 'incorrect' | null;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export function MathInput({
@@ -19,42 +20,34 @@ export function MathInput({
   disabled = false,
   className = '',
   showFeedback = null,
+  onKeyDown,
 }: MathInputProps) {
   const [showKeyboard, setShowKeyboard] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleInsert = (text: string) => {
-    if (text === 'backspace') {
-      onChange(value.slice(0, -1));
-    } else {
-      onChange(value + text);
-    }
-  };
 
   const feedbackClasses = showFeedback === 'correct'
     ? 'border-green-500 bg-green-50 ring-2 ring-green-200'
     : showFeedback === 'incorrect'
     ? 'border-red-500 bg-red-50 ring-2 ring-red-200 shake'
-    : 'border-gray-300 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200';
+    : 'border-gray-300 hover:border-gray-400';
 
   return (
     <>
       <div
         className={`relative flex items-center gap-2 border rounded-lg transition-all ${feedbackClasses} ${className}`}
       >
-        <input
-          ref={inputRef}
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onFocus={() => setShowKeyboard(true)}
-          placeholder={placeholder}
-          disabled={disabled}
-          className="flex-1 px-4 py-3 bg-transparent outline-none text-lg font-mono"
-        />
+        {/* Display current value (read-only preview) */}
+        <div
+          onClick={() => !disabled && setShowKeyboard(true)}
+          className={`flex-1 px-4 py-3 text-lg font-mono min-h-[50px] flex items-center cursor-pointer ${
+            disabled ? 'cursor-not-allowed opacity-60' : ''
+          } ${!value ? 'text-gray-400' : 'text-gray-900'}`}
+        >
+          {value || placeholder}
+        </div>
+
         <button
           type="button"
-          onClick={() => setShowKeyboard(true)}
+          onClick={() => !disabled && setShowKeyboard(true)}
           disabled={disabled}
           className="p-2 mr-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
           title="Open math keyboard"
@@ -83,11 +76,10 @@ export function MathInput({
 
       {showKeyboard && !disabled && (
         <MathKeyboard
-          onInsert={handleInsert}
-          onClose={() => {
-            setShowKeyboard(false);
-            inputRef.current?.focus();
-          }}
+          value={value}
+          onChange={onChange}
+          onClose={() => setShowKeyboard(false)}
+          placeholder={placeholder}
         />
       )}
     </>

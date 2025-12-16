@@ -29,6 +29,14 @@ export function Navigation() {
               Topics
             </Link>
             <Link
+              href="/practice"
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                isActive('/practice') ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              Practice
+            </Link>
+            <Link
               href="/exam"
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 isActive('/exam') ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-100'
